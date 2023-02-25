@@ -1,4 +1,4 @@
- Solucions Final OICat 2022
+ Solucions Classificatori OICat 2023
 
 :warning: __AQUEST DOCUMENT ENCARA NO ESTÀ ACABAT I POT CONTENIR ERRORS__
 
@@ -51,7 +51,7 @@ int main() {
 ```
 </details>
 <details>
-  <summary><b>Codi una mica més elegant</b></summary>
+  <summary><b>El mateix codi però una mica més elegant</b></summary>
 
 ```cpp
 #include <iostream>
