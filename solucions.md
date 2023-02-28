@@ -1,10 +1,6 @@
-<<<<<<< HEAD
- Solucions Classificatori OICat 2023
-=======
- Solucions Final OICat 2022
->>>>>>> 34feafac108cf7d95dd71dfb78de27196231e0ea
+# Solucions Classificatori OICat 2023
 
-:warning: __AQUEST DOCUMENT ENCARA NO ESTÀ ACABAT I POT CONTENIR ERRORS__
+:warning: __AQUEST DOCUMENT ENCARA NO ESTÀ ACABAT I CONTÉ ERRORS__
 
 ## Taula de continguts
 * [Problema C1. Ping-pong](#C1)
