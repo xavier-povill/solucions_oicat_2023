@@ -1,4 +1,8 @@
+<<<<<<< HEAD
  Solucions Classificatori OICat 2023
+=======
+ Solucions Final OICat 2022
+>>>>>>> 34feafac108cf7d95dd71dfb78de27196231e0ea
 
 :warning: __AQUEST DOCUMENT ENCARA NO ESTÀ ACABAT I POT CONTENIR ERRORS__
 
@@ -51,7 +55,11 @@ int main() {
 ```
 </details>
 <details>
+<<<<<<< HEAD
   <summary><b>El mateix codi però una mica més elegant</b></summary>
+=======
+  <summary><b>Codi una mica més elegant</b></summary>
+>>>>>>> 34feafac108cf7d95dd71dfb78de27196231e0ea
 
 ```cpp
 #include <iostream>
