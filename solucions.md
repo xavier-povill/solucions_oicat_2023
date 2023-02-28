@@ -94,7 +94,7 @@ int main() {
 
 ## [Problema C2. L'ase d'en Buridan](https://jutge.org/problems/P86377_ca) <a name="C2"/>
 
-Ens podem guardar els elements en un vector (o llista en Python) i ordenar-los. Llavors, iterem de gran a petit fins que trobem un element repetit (o fins al final del vector si no n'hi ha), guardant-nos la suma dels elements que portem vistos.
+Ens podem guardar les mides dels sacs en un vector (o una llista en Python) i ordenar-les. Llavors, iterem de gran a petita fins que trobem un element repetit (o fins al final del vector, si no hi ha cap repetit), guardant-nos la suma dels sacs que portem menjats.
 
 <details>
   <summary><b>Codi</b></summary>
@@ -106,17 +106,21 @@ using namespace std;
 int main() {
     int n;
     while(cin >> n) {
-        vector<int> v(n);
+        vector<int> v(n); // Declarem un vector de mida n.
         for(int i = 0; i < n; ++i) {
-            cin >> v[i];
+            cin >> v[i]; // Llegim els elements del vector.
         }
-        sort(v.begin(), v.end());
-        int menjat = 0;
+        sort(v.begin(), v.end()); // Ordenem el vector.
+        int menjat = 0; // En aquesta variable anem sumant la mida dels sacs que ens mengem.
         for(int i = n-1; i >= 0; --i) {
             if(i > 0 and v[i] == v[i-1]) {
-                break;
+                // La condicio i > 0 es necessaria perque, si no, quan i == 0,
+                // al fer v[i-1] estariem accedint a la posicio -1 del vector
+                // (que no existeix) i el programa podria fallar. 
+
+                break; // Hem trobat un element repetit, per tant parem.
             }
-            menjat += v[i];
+            menjat += v[i]; // Sumem la mida del sac que ens mengem.
         }
         cout << menjat << endl;
     }
