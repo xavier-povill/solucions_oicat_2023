@@ -110,9 +110,10 @@ int main() {
         for(int i = 0; i < n; ++i) {
             cin >> v[i]; // Llegim els elements del vector.
         }
-        sort(v.begin(), v.end()); // Ordenem el vector.
+        sort(v.begin(), v.end()); // Ordenem el vector de petit a gran.
         int menjat = 0; // En aquesta variable anem sumant la mida dels sacs que ens mengem.
         for(int i = n-1; i >= 0; --i) {
+            // Iterem pels elements del vector de gran a petit.
             if(i > 0 and v[i] == v[i-1]) {
                 // La condicio i > 0 es necessaria perque, si no, quan i == 0,
                 // al fer v[i-1] estariem accedint a la posicio -1 del vector
