@@ -4,9 +4,20 @@
 
 ## Taula de continguts
 * [Problema C1. Ping-pong](#C1)
+* [Problema C2. L'ase d'en Buridan](#C2)
+* [Problema Q1. Productes acabats en cinc](#Q1)
+* [Problema C3. Redistribució de la riquesa](#C3)
+* [Problema G1. Trencaclosques](#G1)
+* [Problema C4. Camp de visió](#C4)
+* [Problema Q2. Classificació de l'OICat](#Q2)
+* [Problema G2. Ordenant llibres](#G2)
+* [Problema C5. Distàncies a les fulles](#C5)
+* [Problema G3. Pizzeries](#G3)
+* [Problema C6. Comptant permutacions](#C6)
+* [Problema C7. Retransmissió](#C7)
 
 
-## [Problema C1. Ping-pong](https://jutge.org/problems/) <a name="C1"/>
+## [Problema C1. Ping-pong](https://jutge.org/problems/P90280_ca) <a name="C1"/>
 
 Podem dividir el problema en 3 casos:
 - Si el guanyador té més de 21 punts, la puntuació serà vàlida sempre i quan la diferència sigui de 2 punts.
@@ -79,7 +90,7 @@ int main() {
 ```
 </details>
 
-## [Problema C2. Ase de Buridan](https://jutge.org/problems/) <a name="C2"/>
+## [Problema C2. L'ase d'en Buridan](https://jutge.org/problems/P86377_ca) <a name="C2"/>
 
 Explicació
 

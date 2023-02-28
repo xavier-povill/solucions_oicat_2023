@@ -1,4 +1,4 @@
 - Redactar solucions: C2,C3,C4,C5,C6,C7,Q1,Q2,G1,G2,G3
 - Penjar codi: C2,C3,C4,C5,C6,C7,Q1,Q2,G1,G2,G3
 - Revisar que entren els codis: C2,C3,C4,C5,C6,C7,Q1,Q2,G1,G2,G3
-- Posar links als problemes: C1,C2,C3,C4,C5,C6,C7,Q1,Q2,G1,G2,G3
+- Posar links als problemes: C3,C4,C5,C6,C7,Q1,Q2,G1,G2,G3
