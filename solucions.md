@@ -128,3 +128,11 @@ int main() {
 }
 ```
 </details>
+
+## [Problema Q1. Productes acabats en cinc](https://jutge.org/problems/P14803_ca) <a name="Q1"/>
+
+La clau d'aquest problema era veure que, per tal que un nombre acabi en 5, ha de ser múltiple de 5 però no de 2.
+
+Per tant, hem de comptar el nombre de subconjunts de { $1, 2, \dots, 50$ } que tenen algun múltiple de 5 però no tenen cap múltiple de 2 (és a dir, on tots els nombres son senars). Entre 1 i 50 hi ha 25 nombres senars, així que el nombre de subconjunts de nombres senars serà $2^{25}$ (per cada nombre senar tenim dues opcions: incloure'l o no incloure'l). Si a aquests els hi restem els $2^{20}$ que no tenen cap múltiple de 5, obtenim $2^{25} - 2^{20} = 32505856$. 
+
+Una altra manera de pensar-ho és que per construir el subconjunt que volem hem de triar uns quants múltiples de 5 senars (tenim $2^5 - 1$ maneres de fer-ho, ja que per cada un dels 5 candidats el podem incloure o no incloure (això ens dona el terme $2^5$), però hem de restar 1 per no comptar el conjunt buit) i un conjunt de nombres senars no múltiples de 5 (d'aquests n'hi ha $2^{20}$ maneres, ja que no ens importa si està buit). Per tant, la resposta és $(2^{5} - 1) \cdot 2^{20}$, que dona el mateix que abans.
