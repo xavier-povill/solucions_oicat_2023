@@ -11,35 +11,56 @@ int main() {
 		for(int& x : a)
 			cin >> x;
 		sort(a.begin(), a.end());
-		int minim = a[0]; // min_i {a_i} que podem aconseguir afegint k euros
-		ll y = 0; // nombre de euros que portem afegits
-		int esq = 1; // invariant: podem fer que tots els elements de a[0..esq-1] 
-		             // siguin majors o iguals a 'minim' afegint 'y' euros
-		while(esq < n and y < k) {
-			ll inc = min(ll(a[esq] - a[esq-1])*esq, k-y); 
-			minim += inc/esq;
-			y += inc;
-			esq++;
-		}
-		int maxim = a[n-1]; // max_i {a_i} que podem aconseguir traient k euros
-		y = 0; // nombre de euros que portem trets
-		int dre = n-2; // invariant: podem fer que tots els elements de a[dre+1..n-1] 
-		               // siguin menors o iguals a 'maxim' traient 'y' euros
-		while(dre >= 0 and y < k) {
-			ll inc = min(ll(a[dre+1] - a[dre])*(n-dre-1), k-y);
-			maxim -= inc/(n-dre-1);
-			y += inc;
-			dre--;
+
+		// cost_esquerra[i] := diners que hem d'afegir per fer que els elements 
+		//                     a l'esquerra d'a[i] siguin iguals a a[i].
+		vector<ll> cost_esquerra(n, 0);
+		for(int i = 1; i < n; ++i) {
+			cost_esquerra[i] = cost_esquerra[i-1] + ll(a[i] - a[i-1]) * i;
 		}
 
-		if(minim >= maxim) {
-			// tot i que puguem moure molts diners, si la suma no es divisible per n 
-			// mai no podrem igualar-ho del tot
+		// cost_dreta[i] := diners que hem de treure per fer que els elements 
+		//                     a la dreta d'a[i] siguin iguals a a[i].
+		vector<ll> cost_dreta(n, 0);
+		for(int i = n-2; i >= 0; --i) {
+			cost_dreta[i] = cost_dreta[i+1] + ll(a[i+1] - a[i]) * (n-i-1);
+		}
+
+		int petit = -1; // maxim minim del vector que podem aconseguir afegint k euros.
+		for(int i = 1; i < n; ++i) {
+			if(cost_esquerra[i] > k) {
+				ll sobrants = k - cost_esquerra[i-1];
+				petit = a[i-1] + sobrants/i;
+				break;
+			}
+		}
+		if(petit == -1) {
+			petit = a[n-1];
+		}
+
+		int gran = -1; // minim maxim del vector que podem aconseguir traient k euros.
+		for(int i = n-2; i >= 0; --i) {
+			if(cost_dreta[i] > k) {
+				ll sobrants = k - cost_dreta[i+1];
+				gran = a[i+1] - sobrants/(n-i-1);
+				break;
+			}
+		}
+		if(gran == -1) {
+			gran = a[0];
+		}
+
+		if(petit >= gran) {
+			// Tot i que puguem moure molts diners, si la suma no 
+			// es divisible per n no ho podrem igualar del tot.
 			ll suma = 0;
-			for(int& x : a) 
+			for(int& x : a) {
 				suma += x;
+			}
 			cout << (suma%n ? 1 : 0) << endl;
 		}
-		else cout << maxim-minim << endl;
+		else {
+			cout << gran - petit << endl;
+		}
 	}
 }

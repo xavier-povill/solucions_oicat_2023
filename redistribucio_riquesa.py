@@ -4,36 +4,44 @@ n, k = read(int, int)
 while n is not None:
 	a = read(int, amount=n)
 	if n == 1:
-		a = [a]
+		a = [a] # si nomes hi ha un element, read(int) 
+		        # el llegeix com a enter, no com a llista
 	a.sort()
-	r = n-1
-	big = a[n-1]
-	acum = 0
-	while r >= 1 and acum < k:
-		d = min(a[r] - a[r-1], (k-acum)//(n-r)) 
-		acum += d*(n-1 - r + 1)
-		big -= d
-		if d != a[r] - a[r-1]:
-			break
-		r -= 1
+	
+	# cost_esquerra[i] := diners que hem d'afegir per fer que els elements 
+	#                     a l'esquerra d'a[i] siguin iguals a a[i].
+	cost_esquerra = [0] * n
+	for i in range(1, n):
+		cost_esquerra[i] = cost_esquerra[i-1] + (a[i] - a[i-1]) * i
 
-	l = 0
-	small = a[0]
-	acum = 0
-	while l <= n-2 and acum < k:
-		d = min(a[l+1] - a[l], (k-acum) // (l+1))
-		acum += d * (l+1)
-		small += d
-		if d != a[l+1] - a[l]:
-			break
-		l += 1
+	# cost_dreta[i] := diners que hem de treure per fer que els elements 
+    #                  a la dreta d'a[i] siguin iguals a a[i].
+	cost_dreta = [0] * n
+	for i in range(n-2, -1, -1):
+		cost_dreta[i] = cost_dreta[i+1] + (a[i+1] - a[i]) * (n-1 - i)
 
-	if small >= big:
+	petit = a[n-1] # maxim minim del vector que podem aconseguir afegint k euros.
+	for i in range(1, n):
+		if cost_esquerra[i] > k:
+			sobrants = k - cost_esquerra[i-1]
+			petit = a[i-1] + sobrants//i
+			break
+
+	gran = a[0] # minim maxim del vector que podem aconseguir traient k euros.
+	for i in range(n-2, -1, -1):
+		if cost_dreta[i] > k:
+			sobrants = k - cost_dreta[i+1]
+			gran = a[i+1] - sobrants//(n-1 - i)
+			break
+
+	if petit >= gran:
+		# Tot i que puguem moure molts diners, si la suma no 
+		# es divisible per n no ho podrem igualar del tot.
 		if sum(a) % n == 0:
 			print(0)
 		else:
 			print(1)
 	else:
-		print(big - small)
+		print(gran - petit)
 
 	n, k = read(int, int)
