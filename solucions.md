@@ -30,6 +30,7 @@ Podem dividir el problema en 3 casos:
 ```cpp
 #include <iostream>
 using namespace std;
+
 int main() {
     int a, b;
     while(cin >> a >> b) {
@@ -78,6 +79,7 @@ int main() {
 ```cpp
 #include <iostream>
 using namespace std;
+
 int main() {
     int a, b;
     while(cin >> a >> b) {
@@ -92,16 +94,32 @@ int main() {
 
 ## [Problema C2. L'ase d'en Buridan](https://jutge.org/problems/P86377_ca) <a name="C2"/>
 
-Explicació
+Ens podem guardar els elements en un vector (o llista en Python) i ordenar-los. Llavors, iterem de gran a petit fins que trobem un element repetit (o fins al final del vector si no n'hi ha), guardant-nos la suma dels elements que portem vistos.
 
 <details>
   <summary><b>Codi</b></summary>
 
 ```cpp
-#include <iostream>
+#include<bits/stdc++.h>
 using namespace std;
+
 int main() {
-    
+    int n;
+    while(cin >> n) {
+        vector<int> v(n);
+        for(int i = 0; i < n; ++i) {
+            cin >> v[i];
+        }
+        sort(v.begin(), v.end());
+        int menjat = 0;
+        for(int i = n-1; i >= 0; --i) {
+            if(i > 0 and v[i] == v[i-1]) {
+                break;
+            }
+            menjat += v[i];
+        }
+        cout << menjat << endl;
+    }
 }
 ```
 </details>
