@@ -139,7 +139,22 @@ Una altra manera de pensar-ho és que per construir el subconjunt que volem hem 
 
 ## [Problema C3. Redistribució de la riquesa](https://jutge.org/problems/P57539_ca) <a name="C3"/>
 
-Expl
+L'estratègia òptima per minimitzar la diferència entre el més ric i el més pobre és repetir el següent procediment $k$ vegades:
+1. Buscar la persona més rica (si hi ha un empat, agafem una qualsevol de les que tinguin més diners), a la que anomenem $r$.
+2. Buscar la persona més pobra (si hi ha un empat, agafem una qualsevol de les que tinguin menys diners), a la que anomenem $p$.
+3. Si $a_r > a_p$, transferim $1$ euro de $r$ a $p$.
+
+El problema és que, com que $k$ pot ser molt gran (fins a $10^{18}$), no podem simular-ho directament, sinó que hem de trobar una manera més ràpida de calcular el resultat. El que farem és calcular per separat la màxima riquesa de la persona més pobra i la mínima riquesa de la persona més rica que es pot aconseguir transferint només $k$ euros. Si la riquesa de la persona més pobra és $m$ i la riquesa de la persona més rica és $M$, la resposta serà $M-m$ (a no ser que $m \geq M$, llavors la resposta serà o $0$ o $1$, depenent de si la suma total de diners és divisible pel nombre de persones). 
+
+En primer lloc, ordenem les persones de menys a més diners (de manera que $a_1 \geq a_2 \geq \dots \geq a_n$). Un cop les tenim ordenades, observem que el procediment anterior el que farà és anar transferint diners de $a_n$ fins a $a_1$. Si $k$ és prou gran, arribarà un moment en el que $a_1 = a_2$. Llavors, en lloc de donar-li tots els diners a $a_1$, el que farem és anar alternant entre donar-li un euro a $a_1$ i donar-li un euro a $a_2$, mantenint-los el màxim igualats possibles en tot moment per tal de maximitzar la mínima riquesa. Similarment, un cop tinguem que $a_3 = a_2 = a_1$, passarem a alternar entre els $3$, mantenint-los el màxim d'igualats possibles.
+
+Així doncs, mentre tinguem que $a_1 < a_2$, ens costarà $1$ euro augmentar en $1$ unitat la mínima riquesa. Un cop arribem a $a_1 = a_2$, ens costarà $2$ euros augmentar la mínima riquesa en $1$ unitat. Un cop arribem a $a_1 = a_2 = a_3$, ens costarà $3$ euros augmentar la mínima riquesa en $1$ unitat. I així successivament, un cop arribem a $a_1 = a_2 = \dots = a_i$, ens costarà $i$ euros augmentar la mínima riquesa en $1$ unitat.
+
+Entre les persones riques passa el mateix: mentre $a_n > a_{n-1}$, ens costarà $1$ euro disminuir en $1$ unitat la màxima riquesa, però un cop arribem a $a_n = a_{n-1}$ ens passarà a costar $2$ euros, un cop $a_n  = a_{n-1} = a_{n-2}$ ens costarà $3$ euros, etc.
+
+Tenint això en ment, una manera de resoldre el problema és anar iterant d'esquerra a dreta del vector ordenat, calculant quants diners ens costarà haver igualat els primers $i$ elements, per tot $i$ des de $1$ fins a $n$. Sigui $v_i$ aquest valor. A continuació, trobem el màxim índex $j$ tal que podem igualar els primers $j$ elements amb menys de $k$ euros, però no podem igualar els primers $j+1$ elements amb menys de $k$ euros. Aleshores, la màxima riquesa de la persona més pobra que podem aconseguir serà $m = a_j + \lfloor (k - v_j)/j \rfloor$, perquè repartim diners a les $j$ persones més probres fins que estan totes a $a_j$ (havent gastat $v_j$ euros), i amb els $k-v_j$ euros restants calculem quantes unitats podem augmentar els $j$ elements abans de quedar-nos sense diners.
+
+Similarment, si $w_i$ són els diners que hem de transferir per fer que $a_n = a_{n-1} = \dots = a_i$, i $j$ és el mínim índex tal que podem $w_i \geq k$, tenim que la mínima riquesa de la persona més rica serà $M = a_j - \lfloor (k - w_j) / (n-j+1) \rfloor$, ja que ara tindrem $n-j+1$ persones entre les quals repartir els diners sobrants.
 
 <details>
   <summary><b>Codi (C++)</b></summary>
