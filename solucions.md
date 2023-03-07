@@ -285,6 +285,8 @@ while n is not None:
 
 ## [Problema G1. Trencaclosques](https://jutge.org/problems/P49148_ca) <a name="G1"/>
 
+Per dibuixar la peça de puzzle es podia començar amb un quadrat i llavors afegir per cada costat un cercle del color del fons o del color de la peça, depenent de la forma del costat. Era fàcil equivocar-se amb els centres dels cercles, o dibuixant el cercle amb 1 píxel de diàmetre més o menys dels que tocava. Recordeu de cara a futurs problemes que les imatges de la llibreria `PIL` es representen com graelles amb $n$ files i $m$ columnes on la casella superior esquerra té les coordenades $(0,0)$ i la casella inferior dreta té les coordenades $(m-1,n-1)$.
+
 <details>
     <summary><b>Codi</b></summary>
 
