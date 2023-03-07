@@ -152,9 +152,9 @@ Així doncs, mentre tinguem que $a_1 < a_2$, ens costarà $1$ euro augmentar en 
 
 Entre les persones riques passa el mateix: mentre $a_n > a_{n-1}$, ens costarà $1$ euro disminuir en $1$ unitat la màxima riquesa, però un cop arribem a $a_n = a_{n-1}$ ens passarà a costar $2$ euros, un cop $a_n  = a_{n-1} = a_{n-2}$ ens costarà $3$ euros, etc.
 
-Tenint això en ment, una manera de resoldre el problema és anar iterant d'esquerra a dreta del vector ordenat, calculant quants diners ens costarà haver igualat els primers $i$ elements, per tot $i$ des de $1$ fins a $n$. Sigui $v_i$ aquest valor. A continuació, trobem el màxim índex $j$ tal que podem igualar els primers $j$ elements amb $k$ euros o menys, però no podem igualar els primers $j+1$ elements amb $k$ euros (és a dir, el màxim índex $j$ tal que $v_j \leq k$. Aleshores, la màxima riquesa de la persona més pobra que podem aconseguir serà $m = a_j + \lfloor (k - v_j)/j \rfloor$, perquè repartim diners a les $j$ persones més pobres fins que estan totes a $a_j$ (havent gastat $v_j$ euros), i amb els $k-v_j$ euros restants calculem quantes unitats podem augmentar $m$ abans de quedar-nos sense diners.
+Tenint això en ment, una manera de resoldre el problema és anar iterant d'esquerra a dreta del vector ordenat, calculant quants diners ens costarà haver igualat els primers $i$ elements, per tot $i$ des de $1$ fins a $n$. Sigui $v_i$ aquest valor. A continuació, trobem el màxim índex $j$ tal que podem igualar els primers $j$ elements amb $k$ euros o menys, però no podem igualar els primers $j+1$ elements amb $k$ euros o menys (és a dir, el màxim índex $j$ tal que $v_j \leq k$). Aleshores, la màxima riquesa de la persona més pobra que podem aconseguir serà $m = a_j + \lfloor (k - v_j)/j \rfloor$, perquè repartim diners a les $j$ persones més pobres fins que estan totes a $a_j$ (havent gastat $v_j$ euros), i amb els $k-v_j$ euros restants calculem quantes unitats podem augmentar $m$ abans de quedar-nos sense diners.
 
-Similarment, si $w_i$ són els diners que hem de transferir per fer que $a_n = a_{n-1} = \dots = a_i$, i $j$ és el mínim índex tal que podem $w_i \leq k$, tenim que la mínima riquesa de la persona més rica serà $M = a_j - \lfloor (k - w_j) / (n-j+1) \rfloor$, ja que ara tindrem $n-j+1$ persones entre les quals repartir els diners sobrants.
+Similarment, si $w_i$ són els diners que hem de transferir per fer que $a_n = a_{n-1} = \dots = a_i$, i $j$ és el mínim índex tal que $w_j \leq k$, tenim que la mínima riquesa de la persona més rica serà $M = a_j - \lfloor (k - w_j) / (n-j+1) \rfloor$, ja que ara tindrem $n-j+1$ persones entre les quals repartir els diners sobrants.
 
 <details>
   <summary><b>Codi (C++)</b></summary>
@@ -280,5 +280,56 @@ while n is not None:
         print(gran - petit)
 
     n, k = read(int, int)
+```
+</details>
+
+## [Problema G1. Trencaclosques](https://jutge.org/problems/P49148_ca) <a name="G1"/>
+
+<details>
+    <summary><b>Codi</b></summary>
+
+```py
+from PIL import Image, ImageDraw
+from easyinput import read
+
+# Dibuixa un rectangle amb vertex superior esquerre a (x1,y1) i vertex inferior dret a (x2, y2).
+def rect(x1, y1, x2, y2, col):
+    dib.polygon([(x1, y1), (x2, y1), (x2, y2), (x1, y2)], col)
+
+# Dibuixa un quadrat amb vertex superior esquerre a (x, y) i costats de llargada c.
+def quadrat(x, y, c, col):
+    rect(x, y, x+c-1, y+c-1, col)
+
+# Dibuixa un cercle amb diametre d.
+def cercle(centre, d, col):
+    (x,y) = centre
+    r = d//2
+    dib.ellipse([(x-r, y-r), (x+r, y+r)], col)
+
+c = read(int)
+d = read(int)
+m = read(int)
+color_fons = read(str)
+color_dins = read(str)
+forma = read(str)
+
+img = Image.new('RGB', (c+2*m, c+2*m), color_fons)
+dib = ImageDraw.Draw(img)
+
+quadrat(m, m, c, color_dins) # dibuixa la peça quadrada.
+
+# Índex del píxel de la meitat del costat de la peça de puzzle (començant a comptar per 0).
+mig = m + (c-1)//2 
+
+centres_fora = [(mig, m-1), (c+m, mig), (mig, c+m), (m-1, mig)]
+centres_dins = [(mig, m), (c+m-1, mig), (mig, c+m-1), (m, mig)]
+
+for i in range(4):
+    if forma[i] == '(':
+        cercle(centres_dins[i], d, color_fons)
+    elif forma[i] == ')':
+        cercle(centres_fora[i], d, color_dins)
+
+img.save('output.png')
 ```
 </details>
