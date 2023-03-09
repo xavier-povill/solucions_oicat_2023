@@ -357,7 +357,7 @@ double angle(int x, int y) {
 int main() {
     int n, theta;
     while(cin >> n >> theta) {
-        vector<double> a(n); // vector on guardem els angles dels punts.
+        vector<double> a(n); // vector on guardem els angles dels objectes.
         for(auto& d : a) {
             int x, y;
             cin >> x >> y;
@@ -368,18 +368,18 @@ int main() {
             continue;
         }
         sort(a.begin(), a.end());
-        int ans = 1; // màxim nombre de punts que podem veure.
+        int ans = 1; // màxim nombre d'objectes que podem veure.
         int r = 1;
         for(int l = 0; l < n; ++l) {
-            // l := primer punt que veiem en sentit antihorari.
-            // r := primer punt que no veiem en sentit antihorari des de l.
+            // l := primer objecte que veiem en sentit antihorari.
+            // r := primer objecte que no veiem en sentit antihorari des de l.
 
-            // Augmentem r fins que no poguem veure el punt r.
+            // Augmentem r fins que no poguem veure l'objecte r.
             while(a[r%n] - a[l] + (r%n < l? 360 : 0) <= theta) {
                 ++r;
                 if(r%n == l) break;
             }
-            ans = max(ans, r - l); // començant des de l podem veure un total de r-l punts.
+            ans = max(ans, r - l); // començant des de l podem veure un total de r-l objectes.
         }
         cout << ans << endl;
     }
@@ -399,7 +399,7 @@ def angle(x, y):
     return atan2(y, x) * 180 / pi
 
 
-# Angle en sentit antihorari entre els punts b[l] i b[r].
+# Angle en sentit antihorari entre els objectes l i r.
 def diff(l, r):
     if r < l:
         return b[r] - b[l] + 360
@@ -408,21 +408,21 @@ def diff(l, r):
 
 n, theta = read(int,int)
 while(n is not None):
-    a = read(int, amount = 2*n) # llegim les coordenades dels n punts com una llista de longitud 2n.
+    a = read(int, amount = 2*n) # llegim les coordenades dels n objectes com una llista de longitud 2n.
     b = [angle(a[2*i], a[2*i+1]) for i in range(n)]
-    b.sort() # ens construim una llista ordenada amb els angles de cada un dels n punts.
-    ans = 1 # maxim nombre de punts que podem veure simultàniament.
+    b.sort() # ens construim una llista ordenada amb els angles de cada un dels n objectes.
+    ans = 1 # maxim nombre d'objectes que podem veure simultàniament.
     r = 1
     for l in range(n): 
-        # l := primer punt que podem veure en sentit antihorari.
-        # r := primer punt que no podem veure en sentit antihorari des de l.
+        # l := primer objecte que podem veure en sentit antihorari.
+        # r := primer objecte que no podem veure en sentit antihorari des de l.
 
-        # Augmentem r fins que no poguem veure el punt r. 
+        # Augmentem r fins que no poguem veure l'objecte r. 
         while(diff(l, r%n) <= theta and n != 1):
             r += 1
             if r%n == l:
                 break
-        ans = max(ans, r-l) # començant des de l podem veure un total de r-l punts.
+        ans = max(ans, r-l) # començant des de l podem veure un total de r-l objectes.
     print(ans)
 
     n, theta = read(int,int)
