@@ -17,7 +17,7 @@
 * [Problema C7. Retransmissió](#C7)
 
 
-## [Problema C1. Ping-pong](https://jutge.org/problems/P90280_ca) <a name="C1"/>
+## [Problema C1. Ping-pong](https://jutge.org/problems/P90280_ca) <a name="C1"></a>
 
 Podem dividir el problema en 3 casos:
 - Si el guanyador té més de 21 punts, la puntuació serà vàlida sempre i quan la diferència sigui de 2 punts.
@@ -431,6 +431,7 @@ while(n is not None):
 
 ## [Problema Q2. Classificació de l'OIcat](https://jutge.org/problems/P20364_ca) <a name="Q2"/>
 
+Segons el <aPrincipi d'Inclusió-Exclusió
 
 ## [Problema G2. Ordenant llibres](https://jutge.org/problems/P58245_ca) <a name="G2"/>
 
