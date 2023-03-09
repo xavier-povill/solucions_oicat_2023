@@ -337,3 +337,153 @@ for i in range(4):
 img.save('output.png')
 ```
 </details>
+
+## [Problema C4. Camp de visió](https://jutge.org/problems/P66837_ca) <a name="C4"/>
+
+
+
+<details><summary><b>Codi (C++)</b></summary>
+
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+// Angle del punt (x, y) amb l'eix X. Retorna un valor en l'interval [-180, 180]:
+// (per ex. angle(1, 0) = 0, angle(0, 1) = 90, angle(0, -1) = -90).
+double angle(int x, int y) {
+    return atan2(y, x) * 180 / M_PI;
+}
+
+int main() {
+    int n, theta;
+    while(cin >> n >> theta) {
+        vector<double> a(n); // vector on guardem els angles dels punts.
+        for(auto& d : a) {
+            int x, y;
+            cin >> x >> y;
+            d = angle(x, y);
+        }
+        if(n == 1) {
+            cout << 1 << endl;
+            continue;
+        }
+        sort(a.begin(), a.end());
+        int ans = 1; // màxim nombre de punts que podem veure.
+        int r = 1;
+        for(int l = 0; l < n; ++l) {
+            // l := primer punt que veiem en sentit antihorari.
+            // r := primer punt que no veiem en sentit antihorari des de l.
+
+            // Augmentem r fins que no poguem veure el punt r.
+            while(a[r%n] - a[l] + (r%n < l? 360 : 0) <= theta) {
+                ++r;
+                if(r%n == l) break;
+            }
+            ans = max(ans, r - l); // començant des de l podem veure un total de r-l punts.
+        }
+        cout << ans << endl;
+    }
+}
+```
+</details>
+
+<details><summary><b>Codi (Python3)</b></summary>
+
+```python
+from easyinput import read
+from math import atan2, pi
+
+# Angle del punt (x, y) amb l'eix X. Retorna un valor en l'interval [-180, 180].
+# (per ex. angle(1, 0) = 0, angle(0, 1) = 90, angle(0, -1) = -90).
+def angle(x, y):
+    return atan2(y, x) * 180 / pi
+
+
+# Angle en sentit antihorari entre els punts b[l] i b[r].
+def diff(l, r):
+    if r < l:
+        return b[r] - b[l] + 360
+    return b[r] - b[l]
+
+
+n, theta = read(int,int)
+while(n is not None):
+    a = read(int, amount = 2*n) # llegim les coordenades dels n punts com una llista de longitud 2n.
+    b = [angle(a[2*i], a[2*i+1]) for i in range(n)]
+    b.sort() # ens construim una llista ordenada amb els angles de cada un dels n punts.
+    ans = 1 # maxim nombre de punts que podem veure simultàniament.
+    r = 1
+    for l in range(n): 
+        # l := primer punt que podem veure en sentit antihorari.
+        # r := primer punt que no podem veure en sentit antihorari des de l.
+
+        # Augmentem r fins que no poguem veure el punt r. 
+        while(diff(l, r%n) <= theta and n != 1):
+            r += 1
+            if r%n == l:
+                break
+        ans = max(ans, r-l) # començant des de l podem veure un total de r-l punts.
+    print(ans)
+
+    n, theta = read(int,int)
+```
+</details>
+
+## [Problema Q2. Classificació de l'OIcat](https://jutge.org/problems/P20364_ca) <a name="Q2"/>
+
+
+## [Problema G2. Ordenant llibres](https://jutge.org/problems/P58245_ca) <a name="G2"/>
+
+
+<details><summary><b>Codi</b></summary>
+
+```python
+from easyinput import read
+```
+</details>
+
+
+## [Problema C5. Distàncies a les fulles](https://jutge.org/problems/P38916_ca) <a name="C5"/>
+
+
+
+<details><summary><b>Codi (C++)</b></summary>
+
+```cpp
+#include<bits/stdc++.h>
+```
+</details>
+
+
+## [Problema G3. Pizzeries](https://jutge.org/problems/P48553_ca) <a name="G3"/>
+
+
+<details><summary><b>Codi</b></summary>
+
+```python
+from easyinput import read
+```
+</details>
+
+
+## [Problema C6. Comptant permutacions](https://jutge.org/problems/P38305_ca) <a name="C6"/>
+
+
+
+<details><summary><b>Codi (C++)</b></summary>
+
+```cpp
+#include<bits/stdc++.h>
+```
+</details>
+
+## [Problema C7. Retransmissió](https://jutge.org/problems/P90287_ca) <a name="C7"/>
+
+
+
+<details><summary><b>Codi (C++)</b></summary>
+
+```cpp
+#include<bits/stdc++.h>
+```
+</details>
