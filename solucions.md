@@ -680,6 +680,7 @@ for k in range(4):
     u = [v[0] + dx[k], v[1] + dy[k]]
     # visita el vertex u.
 ```
+
 Això acostuma a ser molt més simple que construir-se el graf $G$ explícitament.
 </details>
 
@@ -756,12 +757,76 @@ img.save('output.png')
 
 ## [Problema C6. Comptant permutacions](https://jutge.org/problems/P38305_ca) <a name="C6"/>
 
+Observem que en tenim prou amb saber calcular el nombre de permutacions més petites que una permutació fixada. Això és perquè el nombre de permutacions $p$ amb $p_1 \leq p \leq p_2$ serà igual a $f(p_2)+1 - f(p_1)$, on $f(p)$ és el nombre de permutacions estrictament més petites que $p$.
 
+Per tant, suposem que tenim una permutació fixada $p$, de longitud $n$ i anem a calcular quantes permutacions hi ha que siguin estrictament més petites. Si $q < p$, això vol dir que existeix una posició $i$ entre $0$ i $n-1$ tal que $q_0 = p_0$, $q_1 = p_1$, $\dots$, $q_{i-1} = p_{i-1}$, i $q_i < p_i$. A partir d'aleshores, és igual com estiguin ordenats la resta d'elements, que sempre tindrem que $q < p$.
+
+Així doncs, tenim que el nombre de permutacions $q$ més petites que $p$ que primer difereixen de $p$ en la posició $i$ és $c(i) \cdot (n-i-1)!$, on $c(i)$ és el nombre de caràcters que podem posar a la posició $i$-èssima i que siguin més petits que $p_i$, i $(n-i-1)!$ són les maneres d'ordenar els $n-i-1$ caràcters restants. Per calcular $c(i)$, iterem per totes els $j$ amb $0 \leq j < p_i$ i comprovem quants d'aquests no han aparegut ja a l'esquerra de $p$ (és a dir, entre $p_0$, $p_1$, $\dots$, $p_{i-1}$).
+
+La complexitat total és $\mathcal O(n^2)$, ja que per cada $i$ entre $0$ i $n-1$ hem d'iterar pels elements $j < i$ per veure si ja han estat utilitzats.
+
+<details><summary><b>Repte</b></summary>
+Sabríeu modificar la solució per tal que la complexitat sigui $\mathcal O(n \log n)$?
+</details> 
 
 <details><summary><b>Codi (C++)</b></summary>
 
 ```cpp
 #include<bits/stdc++.h>
+using namespace std;
+
+using ll = long long;
+
+vector<ll> factorial;
+
+// Precalcula els factorials fins a n.
+// Necessitem que n! < 9e18 per tal que el resultat càpiga en un long long int. 
+void precalcula_factorials(int n) {
+    factorial = vector<ll>(n+1, 1);
+    for(int k = 2; k <= n; ++k) {
+        factorial[k] = k * factorial[k-1];
+    }
+}
+
+// Donada una permutació, calcula el nombre de permutacions lexicogràficament més petites.
+ll ordre(vector<int> const& perm) {
+    int n = perm.size();
+    ll ans = 0; // nombre de permutacions estrictament més petites que perm.
+
+    // vist[k] = true si ja ha sortit el número k en el tros que portem vist 
+    // de l'esquerra de la permutació.
+    vector<bool> vist(n, false);
+    for (int i = 0; i < n; ++i) {
+        int nums_petits = 0; // nombres més petits que perm[i] que encara no han sortit.
+        for(int j = 0; j < perm[i]; ++j) {
+            if(not vist[j]) nums_petits++;
+        }
+        // Totes les permutacions que tinguin un nombre més petit que perm[i] a la 
+        // posició i seran lexicogràficament més petites.
+        ans += nums_petits * factorial[n-i-1];
+        vist[perm[i]] = true;
+    }
+    return ans;
+}
+
+int main() {
+    int n;
+    while(cin >> n) {
+        vector<int> p1(n);
+        for(int& x : p1){
+            cin >> x;
+            x--;
+        }
+        vector<int> p2(n);
+        for(int& x : p2){
+            cin >> x;
+            x--;
+        }
+
+        precalcula_factorials(n);
+        cout << ordre(p2) - ordre(p1) + 1 << endl;
+    }
+}
 ```
 </details>
 
