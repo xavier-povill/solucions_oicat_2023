@@ -965,7 +965,7 @@ int main() {
 <details><summary><b>Repte 2</b></summary>
     La solució per a un graf general utilitza l'algorisme de Dijkstra, que té complexitat $\mathcal O((n+m) \log n)$. Sabríeu modificar aquesta part de l'algorisme per a que tingui complexitat $\mathcal O(n+m)$?
     <details><summary><b>Spoiler</b></summary>
-        Com totes les arestes tenen cost 0 o 1, es pot fer un <a ref="https://cp-algorithms.com/graph/01_bfs.html">0-1 BFS</a>.
+        Com totes les arestes tenen cost 0 o 1, es pot fer un <a href="https://cp-algorithms.com/graph/01_bfs.html">0-1 BFS</a>.
     </details>
 
 </details>
