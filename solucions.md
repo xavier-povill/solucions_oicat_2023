@@ -967,6 +967,7 @@ int main() {
     <details><summary><b>Spoiler</b></summary>
         Com totes les arestes tenen cost 0 o 1, es pot fer un [0-1 BFS](https://cp-algorithms.com/graph/01_bfs.html).
     </details>
+    
 </details>
 
 <details><summary><b>Repte 3</b></summary>
