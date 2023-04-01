@@ -847,7 +847,7 @@ Per entendre millor com calcular aquest $k$, va bé introduir el concepte de <i>
 
 La gràcia d'aquesta definició és que tot vèrtex dolent ha d'aparèixer tant en el camí de $x$ a $y$ com en el camí de $y$ a $x$ (perquè no hi ha cap camí que no passi per ell). Per tant, $k$ és com a mínim el nombre de vèrtexos dolents. De fet, un pot veure que $k$ és exactament el nombre de vèrtexos dolents, ja que si no hi ha cap vèrtex dolent sempre podem agafar dos camins disjunts per l'anada i la tornada. Això és una conseqüència del [teorema de Menger](https://en.wikipedia.org/wiki/Menger's_theorem#Vertex_connectivity), que diu que si tenim un graf on fa falta eliminar $t$ vèrtexos per desconnectar-lo (en el nostre cas, per cada regió del graf on no hi hagi vèrtexos dolents, tindrem que $t = 2$), aleshores podem trobar $t$ camins entre $x$ i $y$ que no comparteixin cap vèrtex (assumint que $x$ i $y$ no són adjacents). 
 
-Així doncs, una possible solució és calcular per cada vèrtex si és un vèrtex dolent (en $\mathcal O(n)$ amb un BFS o DFS), i donar com a resposta $n + \text{"nombre de vèrtexos dolents"}$. La complexitat total és $\mathcal O(n^2)$.
+Així doncs, una possible solució és calcular per cada vèrtex si és un vèrtex dolent (en $\mathcal O(n)$ amb un BFS o DFS), i donar com a resposta $n + \text{``nombre de vèrtexos dolents''}$. La complexitat total és $\mathcal O(n^2)$.
 
 <details><summary><b>Codi(Puntuació parcial)</b></summary>
 
