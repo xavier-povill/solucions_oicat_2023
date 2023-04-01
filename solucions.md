@@ -450,10 +450,125 @@ d'on treiem que el nombre de persones que han resolt un problema dels 3 tipus é
 
 ## [Problema G2. Ordenant llibres](https://jutge.org/problems/P58245_ca) <a name="G2"/>
 
-<details><summary><b>Codi</b></summary>
+<details><summary><b>Solució amb dataclass</b></summary>
+    
+```python
+from PIL import Image, ImageDraw
+from dataclasses import dataclass
+from functools import cmp_to_key
+from typing import List
+
+@dataclass
+class book:
+    title: str
+    author: str
+    year: int
+    month: int
+    day: int
+    pages: int
+    height: int
+    colour: str
+    index: int
+
+# Si retorna un nombre positiu, a anirà abans que b.
+# Si retorna un nombre negatiu, b anirà abans que a.
+def compare(a: book, b: book)->int:
+    if a.title!=b.title:
+        return 2*(a.title>b.title)-1
+    if a.author!=b.author:
+        return 2*(a.author>b.author)-1
+    if a.pages!=b.pages:
+        return b.pages-a.pages
+    if a.year!=b.year:
+        return a.year-b.year
+    if a.month!=b.month:
+        return a.month-b.month
+    if a.day!=b.day:
+        return a.day-b.day
+    if a.height!=b.height:
+        return b.height-a.height
+    return a.index-b.index
+
+n = int(input())
+llibres: List[book] = [None for _ in range(n)] # inicialitzem una llista de llibres de la mida que toca
+amplada_dibuix = 0
+alcada_dibuix = 0
+for i in range(n):
+    # Llegim les dades de cada llibre:
+    titol = input().lower()
+    autor = input().lower()
+    pagines = int(input())
+    data = input()
+    alcada = int(input())
+    color = input()
+    alcada_dibuix = max(alcada_dibuix,alcada)
+    amplada_dibuix += pagines//4
+
+    # Creem l'objecte del llibre.
+    llibres[i] = book(title=titol, author=autor, year=int(data[6:]), month=int(data[3:5]), 
+                    day=int(data[0:2]), pages=pagines, height=alcada, colour=color, index=i)
+
+# Ordenem segons el criteri especificat a la funció compare.
+llibres.sort(key=cmp_to_key(compare))
+
+alcada_dibuix += 10
+img = Image.new('RGB', (amplada_dibuix, alcada_dibuix), 'White')
+dib = ImageDraw.Draw(img)
+dib.polygon([(0,alcada_dibuix-1),(amplada_dibuix-1,alcada_dibuix-1),(amplada_dibuix-1,alcada_dibuix-10),(0,alcada_dibuix-10)],'Brown')
+
+def dibuixa_llibre(x,amplada,alcada,color):
+    dib.polygon([(x,alcada_dibuix-11),(x+amplada-1,alcada_dibuix-11),(x+amplada-1,alcada_dibuix-10-alcada),(x,alcada_dibuix-10-alcada)],color)
+
+x_actual = 0 # coordenada horitzontal per la que anem.
+for llibre in llibres:
+    dibuixa_llibre(x_actual, llibre.pages//4, llibre.height, llibre.colour)
+    x_actual += llibre.pages//4
+img.save("output.png")
+```
+</details>
+
+<details><summary><b>Solució sense dataclass</b></summary>
 
 ```python
-from easyinput import read
+from PIL import Image, ImageDraw
+import math
+
+def rect(x1, y1, x2, y2, col):
+    dib.polygon([(x1, y1), (x2, y1), (x2, y2), (x1, y2)], col)
+
+n = int(input())
+llibres = []
+altura_maxima = 0
+ample_total = 0
+for i in range(n):
+    titol = input()
+    autor = input()
+    pagines = int(input())
+    data = input()
+    data = data.split("/")
+    altura = int(input())
+    color = input()
+
+    altura_maxima = max(altura_maxima, altura)
+    ample_total += pagines//4
+
+    # Ens guardem els parametres que han d'anar ordenats de gran a petit amb signe negatiu per tal que 
+    # l'ordenació per defecte de les tuples ens doni l'ordre que busquem.
+    llibres.append((titol.lower(), autor.lower(), -pagines, data[2], data[1], data[0], -altura, i, color))
+
+img = Image.new('RGB', (ample_total, altura_maxima+10), "White")
+dib = ImageDraw.Draw(img)
+rect(0, altura_maxima, ample_total, altura_maxima+10, "Brown")
+
+llibres = sorted(llibres)
+pos = 0
+for (_, _, pagines, _, _, _, altura, _, col) in llibres:
+    pagines = -pagines # recordeu que ens haviem guardat les pagines i l'altura amb signe negatiu i ho hem de canviar!
+    pagines //= 4
+    altura = -altura
+    rect(pos, altura_maxima-1, pos+pagines-1, altura_maxima-altura, col)
+    pos += pagines
+img.save('output.png')
 ```
 </details>
 
