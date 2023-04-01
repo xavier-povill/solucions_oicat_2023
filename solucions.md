@@ -431,7 +431,7 @@ while(n is not None):
 
 ## [Problema Q2. Classificació de l'OIcat](https://jutge.org/problems/P20364_ca) <a name="Q2"/>
 
-Siguin $C$, $Q$ i $G$ els conjunts d'estudiants que han resolt algun problema clàssic, quiz i gràfic, respectivament. Tal com és habitual, utilitzem el símbol $\cup$ per denotar la unió de dos conjunts (per ex. $C \cup G$ és el conjunt d'estudiants que han resolt un problema clàssic O un problema gràfic) i utilitzem el símbol $\cap$ per denotar la intersecció de dos conjunts (per ex. $C \cap G$ és el conjunt d'estudiants que han resolt un problema clàssic I un problema gràfic).
+Siguin $C$, $Q$ i $G$ els conjunts d'estudiants que han resolt algun problema clàssic, quiz i gràfic, respectivament. Tal com és habitual, utilitzem el símbol $\cup$ per denotar la unió de dos conjunts (per ex. $C \cup G$ és el conjunt d'estudiants que han resolt un problema clàssic <b>o</b> un problema gràfic) i utilitzem el símbol $\cap$ per denotar la intersecció de dos conjunts (per ex. $C \cap G$ és el conjunt d'estudiants que han resolt un problema clàssic <b>i</b> un problema gràfic).
 
 Segons el [Principi d'Inclusió-Exclusió](https://ca.wikipedia.org/wiki/Principi_d%27inclusi%C3%B3-exclusi%C3%B3), tenim que 
 
