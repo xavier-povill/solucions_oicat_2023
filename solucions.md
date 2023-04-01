@@ -340,7 +340,11 @@ img.save('output.png')
 
 ## [Problema C4. Camp de visió](https://jutge.org/problems/P66837_ca) <a name="C4"/>
 
+La idea clau és calcular l'angle que forma cada punt des del centre respecte a l'eix horitzontal (o respecte a qualsevol altre punt de referència) i guardar-los en una llista d'angles ordenada $\{a_0, \dots, a_{n-1}\}$. 
 
+Observem que és òptim posar la càmara de manera que un dels punts estigui tocant el límit del camp de visió (per què en cas que no, podríem girar la càmara una mica sense perdre cap punt). Així doncs, podem iterar per la llista calculant per cada possible posició de la càmara fins a quin punt arribaríem a veure. La manera trivial de fer-ho dona lloc a un algorisme $\mathcal O(n^2)$, però es pot optimitzar a $\mathcal O(n \log n)$ fent cerca binària, o a $\mathcal O(n)$ guardant-se l'índex de més a la dreta que hem arribat entre iteracions per a evitar tornar enrere. Només cal anar amb compte de tractar bé el cas en el que arribem al final de la llista i hem de tornar a començar pel principi.
+
+La complexitat total serà $\mathcal O(n \log n)$, ja que hem d'incloure el cost d'ordenar la llista d'angles al principi. Per calcular l'angle d'un punt $(x, y)$ amb l'eix horitzontal podem utilitzar la funció $\texttt{atan(y, x)}$, que ens retorna l'angle en radians com un valor entre $-\pi$ i $\pi$.
 
 <details><summary><b>Codi (C++)</b></summary>
 
@@ -431,7 +435,7 @@ while(n is not None):
 
 ## [Problema Q2. Classificació de l'OIcat](https://jutge.org/problems/P20364_ca) <a name="Q2"/>
 
-Siguin $C$, $Q$ i $G$ els conjunts d'estudiants que han resolt algun problema clàssic, quiz i gràfic, respectivament. Tal com és habitual, utilitzem el símbol $\cup$ per denotar la unió de dos conjunts (per ex. $C \cup G$ és el conjunt d'estudiants que han resolt un problema clàssic <b>o</b> un problema gràfic) i utilitzem el símbol $\cap$ per denotar la intersecció de dos conjunts (per ex. $C \cap G$ és el conjunt d'estudiants que han resolt un problema clàssic <b>i</b> un problema gràfic).
+Siguin $C$, $Q$ i $G$ els conjunts d'estudiants que han resolt algun problema clàssic, quiz i gràfic, respectivament. Tal com és habitual, utilitzem el símbol $\cup$ per denotar la unió de dos conjunts (per ex. $C \cup G$ és el conjunt d'estudiants que han resolt un problema clàssic <b>o</b> un problema gràfic) i utilitzem el símbol $\cap$ per denotar la intersecció de dos conjunts (per ex. $C \cap G$ és el conjunt d'estudiants que han resolt un problema clàssic <b>i</b> un problema gràfic). Per referir-nos a la mida d'un conjunt utilitzem el símbol $\left \vert \cdot \right \vert$ (per ex. $\lv C \rv$ és la mida del conjunt $C$, és a dir, el nombre d'estudiants que han resolt algun problema clàssic).
 
 Segons el [Principi d'Inclusió-Exclusió](https://ca.wikipedia.org/wiki/Principi_d%27inclusi%C3%B3-exclusi%C3%B3), tenim que 
 
