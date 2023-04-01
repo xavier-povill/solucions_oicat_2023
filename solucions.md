@@ -340,7 +340,7 @@ img.save('output.png')
 
 ## [Problema C4. Camp de visió](https://jutge.org/problems/P66837_ca) <a name="C4"/>
 
-La idea clau és calcular l'angle que forma cada punt des del centre respecte a l'eix horitzontal (o respecte a qualsevol altre punt de referència) i guardar-los en una llista d'angles ordenada $\{a_0, \dots, a_{n-1}\}$. 
+La idea clau és calcular l'angle que forma cada punt des del centre respecte a l'eix horitzontal (o respecte a qualsevol altre punt de referència) i guardar-los en una llista d'angles ordenada.
 
 Observem que és òptim posar la càmara de manera que un dels punts estigui tocant el límit del camp de visió (per què en cas que no, podríem girar la càmara una mica sense perdre cap punt). Així doncs, podem iterar per la llista calculant per cada possible posició de la càmara fins a quin punt arribaríem a veure. La manera trivial de fer-ho dona lloc a un algorisme $\mathcal O(n^2)$, però es pot optimitzar a $\mathcal O(n \log n)$ fent cerca binària, o a $\mathcal O(n)$ guardant-se l'índex de més a la dreta que hem arribat entre iteracions per a evitar tornar enrere. Només cal anar amb compte de tractar bé el cas en el que arribem al final de la llista i hem de tornar a començar pel principi.
 
