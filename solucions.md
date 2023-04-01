@@ -960,14 +960,14 @@ int main() {
 
 <details><summary><b>Repte 1</b></summary>
     En el cas d'un arbre, si en lloc d'una única parella $(x, y)$ tenim $q$ parelles diferents per a les quals hem de calcular la solució, la solució anterior tindrà una complexitat de $\mathcal O(nq)$. Sabríeu resoldre el problema amb complexitat $\mathcal O((n+q)\log n)$?
-<details>
+</details>
 
 <details><summary><b>Repte 2</b></summary>
     La solució per un graf general utilitza un Dijkstra que té complexitat $\mathcal O((n+m) \log n)$. Sabríeu modificar aquesta part de l'algorisme per a que tingui complexitat $\mathcal O((n+m))$?
     <details><summary><b>Spoiler</b></summary>
         Com totes les arestes tenen cost 0 o 1, es pot fer un [0-1 BFS](https://cp-algorithms.com/graph/01_bfs.html).
     </details>
-    
+
 </details>
 
 <details><summary><b>Repte 3</b></summary>
