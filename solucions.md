@@ -664,12 +664,13 @@ int main() {
 Podem pensar la graella com un graf, on des de cada casella es pot anar a les 4 caselles adjacents. Així doncs, podem resoldre aquest problema igual que el problema C5, fent un BFS des de totes les pizzeries a la vegada.
 
 <details open><summary><b>Truc per la implementació</b></summary>
-Típicament en els problemes de grafs ens guardem la informació del graf en una llista d'adjacència $\texttt{G}$, on $\texttt{G[v]}$ és un vector (o llista en Python) amb els veïns del vèrtex $v$ en el graf. Quan el graf és una graella, no fa falta construir-se aquesta llista explícitament, sinó que ens podem definir vectors $\texttt{dx = {0, 1, 0, -1}}$ i $\texttt{dy = {1, 0, -1, 0}}$ de manera que en lloc de fer:
+Típicament en els problemes de grafs ens guardem la informació del graf en una llista d'adjacència $G$, on $G[v]$ és un vector (o llista en Python) amb els veïns del vèrtex $v$ en el graf. Quan el graf és una graella, no fa falta construir-se aquesta llista explícitament, sinó que ens podem definir vectors $\text{dx} = [0, 1, 0, -1]$ i $\text{dy} = [1, 0, -1, 0]$ de manera que en lloc de fer:
 
 ```python
 for u in G[v]:
     # visita el vèrtex u
 ``` 
+
 podem fer
 
 ```python
