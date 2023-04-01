@@ -580,7 +580,6 @@ img.save('output.png')
 Si només volguéssim trobar la distància de tots els vèrtexs a una fulla concreta, com ho faríeu?
 <details><summary><b>Spoiler</b></summary>
     Per trobar les distàncies d'un vèrtex a tota la resta en un graf no dirigit sense pesos a les arestes, utilitzem l'algorisme BFS (Breadth-First Search). (De fet aquí com el graf és un arbre podríem utilitzar també un DFS, però el BFS també funciona per a grafs amb cicles.)
-
     L'algorisme funciona de la següent manera:
     1. Creem una llista de distàncies de cada vèrtex, que inicialitzem a infinit, i creem una cua on anirem guardant els vèrtexos que hem de processar.
     2. Assignem distància $0$ al vèrtex des del que volem trobar les distàncies, i l'afegim a la cua.
