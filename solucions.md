@@ -586,10 +586,13 @@ Si només volguéssim trobar la distància de tots els vèrtexs a una fulla conc
     3. Mentre la cua no estigui buida, traiem el primer element de la cua (que anomenem $v$) i, per cada veí $u$ de $v$ que encara no haguem visitat (és a dir, que tingui distància infinit), l'afegim a la cua i actualitzem la seva distància: $\texttt{dist[u]} \gets \texttt{dist[v] + 1}$.
     4. Un cop la cua estigui buida, parem. Si queda algun vèrtex amb distància infinit, això voldrà dir que aquest vèrtex no és accessible des del vèrtex font (això no és possible en el nostre cas, ja que un arbre ha de ser connex per definició).
 </details>
+
 Això ens dona una solució amb complexitat $\mathcal O(n^2)$, ja que hi poden haver fins a $\mathcal O(n)$ fulles i calcular les distàncies per cada fulla té cost $\mathcal O(n)$. Com ho podem fer més ràpid?
+
 <details><summary><b>Pista</b></summary>
     El truc és calcular el BFS des de totes les fulles "a la vegada". Se us acut com fer-ho?
 </details>
+
 <details><summary><b>Spoiler</b></summary>
     Al principi de l'algorisme, afegim totes les fulles a la cua a la vegada, i posem la seva distància a 0. A partir d'aleshores continuem amb el BFS normal, i al final les distàncies que obtindrem seran la mínima distància a una de les fulles. Per què? Tal com funciona l'algorisme BFS, primer visitarem tots els vèrtexos a distància 0 (és a dir, les fulles que hem posat inicialment a la cua), després tots els vèrtexos a distància 1 (és a dir, els vèrtexos contigus a una fulla), després els vèrtexos a distància 2, etc. Si en algun moment visitem un vèrtex que ja ha estat visitat, tindrem que el nombre de passos amb que hi hem arribat originalment serà menor o igual que el nombre de passos amb que estem arribant ara, així que ja té la distància correcta i podem ignorar-lo. Així doncs, el fet de tenir múltiples punts d'origen no afecta a la validesa de l'algorisme.
 </details>
