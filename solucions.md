@@ -581,10 +581,12 @@ Si només volguéssim trobar la distància de tots els vèrtexs a una fulla conc
 <details><summary><b>Spoiler</b></summary>
     Per trobar les distàncies d'un vèrtex a tota la resta en un graf no dirigit sense pesos a les arestes, utilitzem l'algorisme BFS (Breadth-First Search). (De fet aquí com el graf és un arbre podríem utilitzar també un DFS, però el BFS també funciona per a grafs amb cicles.)
     L'algorisme funciona de la següent manera:
-    1. Creem una llista de distàncies de cada vèrtex, que inicialitzem a infinit, i creem una cua on anirem guardant els vèrtexos que hem de processar.
-    2. Assignem distància $0$ al vèrtex des del que volem trobar les distàncies, i l'afegim a la cua.
-    3. Mentre la cua no estigui buida, traiem el primer element de la cua (que anomenem $v$) i, per cada veí $u$ de $v$ que encara no haguem visitat (és a dir, que tingui distància infinit), l'afegim a la cua i actualitzem la seva distància: $\texttt{dist[u]} \gets \texttt{dist[v] + 1}$.
-    4. Un cop la cua estigui buida, parem. Si queda algun vèrtex amb distància infinit, això voldrà dir que aquest vèrtex no és accessible des del vèrtex font (això no és possible en el nostre cas, ja que un arbre ha de ser connex per definició).
+    <ol>
+        <li>Creem una llista de distàncies de cada vèrtex, que inicialitzem a infinit, i creem una cua on anirem guardant els vèrtexos que hem de processar.</li>
+        <li>Assignem distància $0$ al vèrtex des del que volem trobar les distàncies, i l'afegim a la cua.</li>
+        <li>Mentre la cua no estigui buida, traiem el primer element de la cua (que anomenem $v$) i, per cada veí $u$ de $v$ que encara no haguem visitat (és a dir, que tingui distància infinit), l'afegim a la cua i actualitzem la seva distància: $\texttt{dist[u]} \gets \texttt{dist[v] + 1}$.</li>
+        <li>Un cop la cua estigui buida, parem. Si queda algun vèrtex amb distància infinit, això voldrà dir que aquest vèrtex no és accessible des del vèrtex font (això no és possible en el nostre cas, ja que un arbre ha de ser connex per definició).</li>
+    </ol>
 </details>
 
 Això ens dona una solució amb complexitat $\mathcal O(n^2)$, ja que hi poden haver fins a $\mathcal O(n)$ fulles i calcular les distàncies per cada fulla té cost $\mathcal O(n)$. Com ho podem fer més ràpid?
