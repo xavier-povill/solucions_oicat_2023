@@ -583,7 +583,7 @@ Si només volguéssim trobar la distància de tots els vèrtexs a una fulla conc
     L'algorisme funciona de la següent manera:
     1. Creem una llista de distàncies de cada vèrtex, que inicialitzem a infinit, i creem una cua on anirem guardant els vèrtexos que hem de processar.
     2. Assignem distància $0$ al vèrtex des del que volem trobar les distàncies, i l'afegim a la cua.
-    3. Mentre la cua no estigui buida, traiem el primer element de la cua (que anomenem $v$) i, per cada veí $u$ de $v$ que encara no haguem visitat (és a dir, que tingui distància infinit), l'afegim a la cua i actualitzem la seva distància: $\texttt{dist[u]} \gets \textt{dist[v] + 1}$.
+    3. Mentre la cua no estigui buida, traiem el primer element de la cua (que anomenem $v$) i, per cada veí $u$ de $v$ que encara no haguem visitat (és a dir, que tingui distància infinit), l'afegim a la cua i actualitzem la seva distància: $\texttt{dist[u]} \gets \texttt{dist[v] + 1}$.
     4. Un cop la cua estigui buida, parem. Si queda algun vèrtex amb distància infinit, això voldrà dir que aquest vèrtex no és accessible des del vèrtex font (això no és possible en el nostre cas, ja que un arbre ha de ser connex per definició).
 </details>
 Això ens dona una solució amb complexitat $\mathcal O(n^2)$, ja que hi poden haver fins a $\mathcal O(n)$ fulles i calcular les distàncies per cada fulla té cost $\mathcal O(n)$. Com ho podem fer més ràpid?
