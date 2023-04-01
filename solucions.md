@@ -832,7 +832,22 @@ int main() {
 
 ## [Problema C7. Retransmissió](https://jutge.org/problems/P90287_ca) <a name="C7"/>
 
+En primer lloc, observem que si $x = y$, la solució del problema és fàcil:
 
+<details><summary><b>Spoiler</b></summary>
+    Si $x = y$, necessitem $n-1$ arestes per tal que es pugui anar des de qualsevol vèrtex al vèrtex $x = y$ (ho podeu pensar com trobar un spanning tree del graf no dirigit, i llavors agafar la direcció de les arestes que "apunta cap a $x$").
+</details>
+
+Per tant, suposarem a partir d'ara que $x \neq y$. Considerem primer el subproblema en el qual $G$ és un arbre (el cas A de l'enunciat, que dona el 50% de la puntuació). En un arbre, per cada parella de vèrtexos només hi ha un únic camí que va entre els dos. Com hem de poder anar de $x$ a $y$ i de $y$ a $x$, necessitem agafar les arestes del camí entre $x$ i $y$ en les dues direccions. Per la resta d'arestes, en tenim prou amb agafar-les en una direcció (la que apunta cap a $x$ o $y$). Per tant, la solució serà $n-1 + \text{dist}(x, y)$. Per calcular la distància fem simplement un BFS o DFS, de manera que la complexitat és $\mathcal O(n)$.
+
+
+En el cas del graf general, continua sent veritat que necessitem anar de $x$ a $y$ i de $y$ a $x$. La diferència és que ara pot haver-hi múltiples camins entre $x$ i $y$, de manera que no fa faltar repetir les mateixes arestes en les dues direccions, sinó que podem aprofitar per agafar arestes que passin per vèrtexos diferents en el camí d'anada i tornada. Per tant, la solució serà $n + k$, on $k$ és el nombre de vèrtexos entre $x$ i $y$ pels quals hem de passar en les dues direccions per força.
+
+Per entendre millor com calcular aquest $k$, va bé introduir el concepte de <i>punts d'articulació</i>. En un graf no dirigit connex, diem que un vèrtex $v$ és un punt d'articulació si el graf es desconnecta quan eliminem el vèrtex $v$. Per exemple, en un arbre tots els vèrtexos excepte les fulles són punts d'articulació, però en un cicle no hi ha cap punt d'articulació. En aquest problema, ens interessen en particular els punts d'articulació que desconnecten $x$ i $y$ (és a dir, els punts d'articulació que, quan els eliminem del graf, deixen $x$ i $y$ en components connexos diferents). Per simplicitat, direm que aquests vèrtexos són <i>vèrtexos dolents</i>.
+
+La gràcia d'aquesta definició és que tot vèrtex dolent ha d'aparèixer tant en el camí de $x$ a $y$ com en el camí de $y$ a $x$ (perquè no hi ha cap camí que no passi per ell). Per tant, $k$ és com a mínim el nombre de vèrtexos dolents. De fet, un pot veure que $k$ és exactament el nombre de vèrtexos dolents, ja que si no hi ha cap vèrtex dolent sempre podem agafar dos camins disjunts per l'anada i la tornada. Això és una conseqüència del [teorema de Menger](https://en.wikipedia.org/wiki/Menger's_theorem#Vertex_connectivity), que diu que si tenim un graf on fa falta eliminar $k$ vèrtexos per desconnectar-lo, aleshores podem trobar $k$ camins entre $x$ i $y$ que no comparteixin cap vèrtex (assumint que $x$ i $y$ no són adjacents). 
+
+Així doncs, una possible solució és calcular per cada vèrtex si és un vèrtex dolent (en $\mathcal O(n)$ amb un BFS o DFS), i donar com a resposta $n + \text{"nombre de vèrtexos dolents"}$. La complexitat total és $\mathcal O(n^2)$.
 
 <details><summary><b>Codi(Puntuació parcial)</b></summary>
 
@@ -916,42 +931,15 @@ int main() {
         cin >> x >> y;
         if(x == y) cout << n-1 << endl;
         else {
-            // artic[v] = true si v és un punt d'articulació que 
-            // desconnecta x i y al treure'l del graf.
-            vector<bool> artic(n, false); 
+            int dolents = 0; // nombre de vèrtexos que desconnecten x i y quan els eliminem del graf.
             for(int v = 0; v < n; ++v) {
+                if(v == x or v == y) continue;
                 vist = vector<bool>(n, false);
                 // Fem un DFS des de x on el vertex v està "prohibit" i no hi podem passar.
                 dfs(x, v); 
-                if(not vist[y]) artic[v] = true;
-            }
-
-            // Fem un Dijkstra des de x fins a y on els arcs que duen a punts d'articulació 
-            // que desconnecten x i y tenen cost 1. Així, dist[y] serà el mínim nombre de 
-            // punts d'articulació pels quals hem de passar en un camí de x a y.
-            int const INF = 1e9;
-            vector<int> dist(n, INF);
-            dist[x] = 0;
-            priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
-            pq.push({0, x});
-            while(not pq.empty()) {
-                pair<int,int> z = pq.top();
-                pq.pop();
-                int v = z.second;
-                if(v == y) break;
-                if(dist[v] != z.first) continue;
-                for(int u : G[v]) {
-                    int d_arc = artic[u];
-                    if(dist[u] > dist[v] + d_arc) {
-                        dist[u] = dist[v] + d_arc;
-                        pq.push({dist[u], u});
-                    }
-                }
-            }
-            // Si y mateix és un punt d'articulació l'haurem comptat en la distància 
-            // (i no l'hem de comptar).
-            if(artic[y]) dist[y]--; 
-            cout << n + dist[y] << endl;
+                if(not vist[y]) dolents++;
+            } 
+            cout << n + dolents << endl;
         }
     }
 }
@@ -963,17 +951,9 @@ int main() {
 </details>
 
 <details><summary><b>Repte 2</b></summary>
-    La solució per a un graf general utilitza l'algorisme de Dijkstra, que té complexitat $\mathcal O((n+m) \log n)$. Sabríeu modificar aquesta part de l'algorisme per a que tingui complexitat $\mathcal O(n+m)$?
-    <details><summary><b>Spoiler</b></summary>
-        Com totes les arestes tenen cost 0 o 1, es pot fer un <a href="https://cp-algorithms.com/graph/01_bfs.html">0-1 BFS</a>.
-    </details>
-
-</details>
-
-<details><summary><b>Repte 3</b></summary>
     En el cas d'un graf general, sabríeu trobar tots els punts d'articulació amb complexitat $\mathcal O(n \log n)$ en lloc de $\mathcal O(n^2)$?
 </details>
 
-<details><summary><b>Repte 4</b></summary>
+<details><summary><b>Repte 3</b></summary>
     Si admetem fins a $q$ queries diferents (com en el repte 1) però ara en un graf general, sabríeu resoldre el problema en $\mathcal O((n+m+q)\log n)$?
 </details>
