@@ -761,7 +761,7 @@ Observem que en tenim prou amb saber calcular el nombre de permutacions més pet
 
 Per tant, suposem que tenim una permutació fixada $p$, de longitud $n$ i anem a calcular quantes permutacions hi ha que siguin estrictament més petites. Si $q < p$, això vol dir que existeix una posició $i$ entre $0$ i $n-1$ tal que $q_0 = p_0$, $q_1 = p_1$, $\dots$, $q_{i-1} = p_{i-1}$, i $q_i < p_i$. A partir d'aleshores, és igual com estiguin ordenats la resta d'elements, que sempre tindrem que $q < p$.
 
-Així doncs, tenim que el nombre de permutacions $q$ més petites que $p$ que primer difereixen de $p$ en la posició $i$ és $c(i) \cdot (n-i-1)!$, on $c(i)$ és el nombre de caràcters que podem posar a la posició $i$-èssima i que siguin més petits que $p_i$, i $(n-i-1)!$ són les maneres d'ordenar els $n-i-1$ caràcters restants. Per calcular $c(i)$, iterem per totes els $j$ amb $0 \leq j < p_i$ i comprovem quants d'aquests no han aparegut ja a l'esquerra de $p$ (és a dir, entre $p_0$, $p_1$, $\dots$, $p_{i-1}$).
+Així doncs, tenim que el nombre de permutacions $q$ més petites que $p$ que primer difereixen de $p$ en la posició $i$ és $c(i) \cdot (n-i-1)!$, on $c(i)$ és el nombre de caràcters que podem posar a la posició $i$-èssima que siguin més petits que $p_i$, i $(n-i-1)!$ són les maneres d'ordenar els $n-i-1$ caràcters restants. Per calcular $c(i)$, iterem per totes els $j$ amb $1 \leq j < p_i$ i comprovem quants d'aquests no han aparegut ja a l'esquerra de $p$ (és a dir, entre $p_0$, $p_1$, $\dots$, $p_{i-1}$).
 
 La complexitat total és $\mathcal O(n^2)$, ja que per cada $i$ entre $0$ i $n-1$ hem d'iterar pels elements $j < i$ per veure si ja han estat utilitzats.
 
