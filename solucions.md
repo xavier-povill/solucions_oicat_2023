@@ -577,12 +577,80 @@ img.save('output.png')
 
 ## [Problema C5. Distàncies a les fulles](https://jutge.org/problems/P38916_ca) <a name="C5"/>
 
+Si només volguéssim trobar la distància de tots els vèrtexs a una fulla concreta, com ho faríeu?
+<details><summary><b>Spoiler</b></summary>
+    Per trobar les distàncies d'un vèrtex a tota la resta en un graf no dirigit sense pesos a les arestes, utilitzem l'algorisme BFS (Breadth-First Search). (De fet aquí com el graf és un arbre podríem utilitzar també un DFS, però el BFS també funciona per a grafs amb cicles.)
 
+    L'algorisme funciona de la següent manera:
+    1. Creem una llista de distàncies de cada vèrtex, que inicialitzem a infinit, i creem una cua on anirem guardant els vèrtexos que hem de processar.
+    2. Assignem distància $0$ al vèrtex des del que volem trobar les distàncies, i l'afegim a la cua.
+    3. Mentre la cua no estigui buida, traiem el primer element de la cua (que anomenem $v$) i, per cada veí $u$ de $v$ que encara no haguem visitat (és a dir, que tingui distància infinit), l'afegim a la cua i actualitzem la seva distància: $\texttt{dist[u]} \gets \textt{dist[v] + 1}$.
+    4. Un cop la cua estigui buida, parem. Si queda algun vèrtex amb distància infinit, això voldrà dir que aquest vèrtex no és accessible des del vèrtex font (això no és possible en el nostre cas, ja que un arbre ha de ser connex per definició).
+</details>
+Això ens dona una solució amb complexitat $\mathcal O(n^2)$, ja que hi poden haver fins a $\mathcal O(n)$ fulles i calcular les distàncies per cada fulla té cost $\mathcal O(n)$. Com ho podem fer més ràpid?
+<details><summary><b>Pista</b></summary>
+    El truc és calcular el BFS des de totes les fulles "a la vegada". Se us acut com fer-ho?
+</details>
+<details><summary><b>Spoiler</b></summary>
+    Al principi de l'algorisme, afegim totes les fulles a la cua a la vegada, i posem la seva distància a 0. A partir d'aleshores continuem amb el BFS normal, i al final les distàncies que obtindrem seran la mínima distància a una de les fulles. Per què? Tal com funciona l'algorisme BFS, primer visitarem tots els vèrtexos a distància 0 (és a dir, les fulles que hem posat inicialment a la cua), després tots els vèrtexos a distància 1 (és a dir, els vèrtexos contigus a una fulla), després els vèrtexos a distància 2, etc. Si en algun moment visitem un vèrtex que ja ha estat visitat, tindrem que el nombre de passos amb que hi hem arribat originalment serà menor o igual que el nombre de passos amb que estem arribant ara, així que ja té la distància correcta i podem ignorar-lo. Així doncs, el fet de tenir múltiples punts d'origen no afecta a la validesa de l'algorisme.
+</details>
 
 <details><summary><b>Codi (C++)</b></summary>
 
 ```cpp
 #include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n;
+    while(cin >> n) {
+        // Ens guardem el graf com a llista d'adjacència,
+        // és a dir: G[v] = {veins de v}.
+        vector<vector<int>> G(n);
+
+        // Un arbre té sempre n-1 arestes.
+        for(int i = 0; i < n-1; ++i) {
+            int u, v;
+            cin >> u >> v;
+            G[u].push_back(v); // afegim aresta u --> v
+            G[v].push_back(u); // afegim aresta v --> u
+        }
+
+        const int INF = 1e9;
+        vector<int> dist(n, INF); 
+        // dist[v] := distancia minima del vertex v a una fulla.
+        queue<int> q;
+
+        // Afegim les fulles a la cua.
+        for(int v = 0; v < n; ++v) {
+            if(G[v].size() == 1) {
+                q.push(v);
+                dist[v] = 0;
+            } 
+        }
+
+        // Fem el BFS.
+        while (not q.empty()) {
+            int v = q.front();
+            q.pop();
+            for(int u : G[v]) {
+                // A diferència de quan fem el Dijkstra en un graf amb pesos,
+                // aquí si arribem a un vèrtex que ja hem visitat, mai serà òptim
+                // actualitzar la seva distància, així que només processem els 
+                // vèrtexos u que encara no hem visitat.
+                if(dist[u] == INF) {
+                    dist[u] = dist[v] + 1;
+                    q.push(u);
+                }
+            }
+        }
+
+        for(int v = 0; v < n; ++v) {
+            cout << dist[v] << endl;
+        }
+        cout << string(10, '-') << endl;
+    }
+}
 ```
 </details>
 
