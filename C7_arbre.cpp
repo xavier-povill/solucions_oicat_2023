@@ -1,10 +1,9 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-
 int main(){
-	// PRE: G es un arbre
-	// Complexitat: O((n+m)*q)
+	// PRECONDICIÓ: G es un arbre
+	// Complexitat: O(n+m)
 	int n, m;
 	while(cin >> n >> m) {
 		vector<vector<int>> G(n);
@@ -14,10 +13,11 @@ int main(){
 			G[a].push_back(b);
 			G[b].push_back(a);
 		}
-		vector<int> dist;
 		int x, y;
 		cin >> x >> y;
-		dist = vector<int>(n, -1);
+
+		// BFS des de x:
+		vector<int> dist(n, -1);
 		dist[x] = 0;
 		queue<int> q;
 		q.push(x);
@@ -27,6 +27,8 @@ int main(){
 		    for(int u : G[v]) {
 		    	if(dist[u] == -1) {
 		    		dist[u] = dist[v] + 1;
+		    		// Podem acabar el BFS si ja hem arribat a y, ja que 
+		    		// la seva distància no canviarà més.
 		    		if(u == y) 
 		    		    break;
 		    		q.push(u);

@@ -834,9 +834,145 @@ int main() {
 
 
 
-<details><summary><b>Codi (C++)</b></summary>
+<details><summary><b>Codi(Puntuació parcial)</b></summary>
 
 ```cpp
 #include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+    // PRECONDICIÓ: G es un arbre
+    // Complexitat: O(n+m)
+    int n, m;
+    while(cin >> n >> m) {
+        vector<vector<int>> G(n);
+        for(int i = 0; i < m; ++i) {
+            int a, b;
+            cin >> a >> b;
+            G[a].push_back(b);
+            G[b].push_back(a);
+        }
+        int x, y;
+        cin >> x >> y;
+
+        // BFS des de x:
+        vector<int> dist(n, -1);
+        dist[x] = 0;
+        queue<int> q;
+        q.push(x);
+        while(not q.empty()) {
+            int v = q.front();
+            q.pop();
+            for(int u : G[v]) {
+                if(dist[u] == -1) {
+                    dist[u] = dist[v] + 1;
+                    // Podem acabar el BFS si ja hem arribat a y, ja que 
+                    // la seva distància no canviarà més.
+                    if(u == y) 
+                        break;
+                    q.push(u);
+                }
+            }
+        }
+        cout << n-1 + dist[y] << endl;
+    }
+}
 ```
 </details>
+
+<details><summary><b>Codi(Puntuació total)</b></summary>
+
+```cpp
+#include <iostream>
+#include <queue>
+#include <vector>
+using namespace std;
+
+vector<bool> vist;
+vector<vector<int>> G;
+
+// Fa un dfs des de u, sense visitar mai el vèrtex prohibit.
+void dfs(int u, int prohibit) {
+    vist[u] = true;
+    for(int v : G[u]) {
+        if(v != prohibit and not vist[v]) {
+            dfs(v, prohibit);
+        }
+    }
+}
+
+int main() {
+    int n, m;
+    while(cin >> n >> m) {
+        G = vector<vector<int>>(n);
+        for(int i = 0; i < m; ++i) {
+            int u, v;
+            cin >> u >> v;
+            G[u].push_back(v);
+            G[v].push_back(u);
+        }
+
+        int x, y;
+        cin >> x >> y;
+        if(x == y) cout << n-1 << endl;
+        else {
+            // artic[v] = true si v és un punt d'articulació que 
+            // desconnecta x i y al treure'l del graf.
+            vector<bool> artic(n, false); 
+            for(int v = 0; v < n; ++v) {
+                vist = vector<bool>(n, false);
+                // Fem un DFS des de x on el vertex v està "prohibit" i no hi podem passar.
+                dfs(x, v); 
+                if(not vist[y]) artic[v] = true;
+            }
+
+            // Fem un Dijkstra des de x fins a y on els arcs que duen a punts d'articulació 
+            // que desconnecten x i y tenen cost 1. Així, dist[y] serà el mínim nombre de 
+            // punts d'articulació pels quals hem de passar en un camí de x a y.
+            int const INF = 1e9;
+            vector<int> dist(n, INF);
+            dist[x] = 0;
+            priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+            pq.push({0, x});
+            while(not pq.empty()) {
+                pair<int,int> z = pq.top();
+                pq.pop();
+                int v = z.second;
+                if(v == y) break;
+                if(dist[v] != z.first) continue;
+                for(int u : G[v]) {
+                    int d_arc = artic[u];
+                    if(dist[u] > dist[v] + d_arc) {
+                        dist[u] = dist[v] + d_arc;
+                        pq.push({dist[u], u});
+                    }
+                }
+            }
+            // Si y mateix és un punt d'articulació l'haurem comptat en la distància 
+            // (i no l'hem de comptar).
+            if(artic[y]) dist[y]--; 
+            cout << n + dist[y] << endl;
+        }
+    }
+}
+```
+</details>
+
+<details><summary><b>Repte 1</b></summary>
+    En el cas d'un arbre, si en lloc d'una única parella $(x, y)$ tenim $q$ parelles diferents per a les quals hem de calcular la solució, la solució anterior tindrà una complexitat de $\mathcal O(nq)$. Sabríeu resoldre el problema amb complexitat $\mathcal O((n+q)\log n)$?
+<details>
+
+<details><summary><b>Repte 2</b></summary>
+    La solució per un graf general utilitza un Dijkstra que té complexitat $\mathcal O((n+m) \log n)$. Sabríeu modificar aquesta part de l'algorisme per a que tingui complexitat $\mathcal O((n+m))$?
+    <details><summary><b>Spoiler</b></summary>
+        Com totes les arestes tenen cost 0 o 1, es pot fer un [0-1 BFS](https://cp-algorithms.com/graph/01_bfs.html).
+    </details>
+</details>
+
+<details><summary><b>Repte 3</b></summary>
+    En el cas d'un graf general, sabríeu trobar tots els punts d'articulació amb complexitat $\mathcal O(n \log n)$ en lloc de $\mathcal O(n^2)$?
+<details>
+
+<details><summary><b>Repte 4</b></summary>
+    Si admetem fins a $q$ queries diferents (com en el repte 1) però ara en un graf general, sabríeu resoldre el problema en $\mathcal O((n+m+q)\log n)$?
+<details>

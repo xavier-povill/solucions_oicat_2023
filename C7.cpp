@@ -6,11 +6,12 @@ using namespace std;
 vector<bool> vist;
 vector<vector<int>> G;
 
-void dfs(int u, int forbidden) {
+// Fa un dfs des de u, sense visitar mai el vèrtex prohibit.
+void dfs(int u, int prohibit) {
 	vist[u] = true;
 	for(int v : G[u]) {
-		if(v != forbidden and not vist[v]) {
-			dfs(v, forbidden);
+		if(v != prohibit and not vist[v]) {
+			dfs(v, prohibit);
 		}
 	}
 }
@@ -30,15 +31,19 @@ int main() {
 		cin >> x >> y;
 		if(x == y) cout << n-1 << endl;
 		else {
-			// Calculem punts d'articulacio que desconnecten x i y:
-			vector<bool> artic(n, false);
+			// artic[v] = true si v és un punt d'articulació que 
+			// desconnecta x i y al treure'l del graf.
+			vector<bool> artic(n, false); 
 			for(int v = 0; v < n; ++v) {
 				vist = vector<bool>(n, false);
-				dfs(x, v);
+				// Fem un DFS des de x on el vertex v està "prohibit" i no hi podem passar.
+				dfs(x, v); 
 				if(not vist[y]) artic[v] = true;
 			}
 
-
+			// Fem un Dijkstra des de x fins a y on els arcs que duen a punts d'articulació 
+			// que desconnecten x i y tenen cost 1. Així, dist[y] serà el mínim nombre de 
+			// punts d'articulació pels quals hem de passar en un camí de x a y.
 			int const INF = 1e9;
 			vector<int> dist(n, INF);
 			dist[x] = 0;
@@ -58,7 +63,9 @@ int main() {
 					}
 				}
 			}
-			if(artic[y]) dist[y]--;
+			// Si y mateix és un punt d'articulació l'haurem comptat en la distància 
+			// (i no l'hem de comptar).
+			if(artic[y]) dist[y]--; 
 			cout << n + dist[y] << endl;
 		}
 	}
