@@ -431,10 +431,20 @@ while(n is not None):
 
 ## [Problema Q2. Classificació de l'OIcat](https://jutge.org/problems/P20364_ca) <a name="Q2"/>
 
-Segons el <aPrincipi d'Inclusió-Exclusió
+Siguin $C$, $Q$ i $G$ els conjunts d'estudiants que han resolt algun problema clàssic, quiz i gràfic, respectivament. Tal com és habitual, utilitzem el símbol $\cup$ per denotar la unió de dos conjunts (per ex. $C \cup G$ és el conjunt d'estudiants que han resolt un problema clàssic O un problema gràfic) i utilitzem el símbol $\cap$ per denotar la intersecció de dos conjunts (per ex. $C \cap G$ és el conjunt d'estudiants que han resolt un problema clàssic I un problema gràfic).
+
+Segons el [Principi d'Inclusió-Exclusió](https://ca.wikipedia.org/wiki/Principi_d%27inclusi%C3%B3-exclusi%C3%B3), tenim que 
+
+$$\left\vert C \right\vert + \left\vert Q \right\vert + \left\vert G \right\vert - \left\vert C \cap G\right\vert  - \left\vert G \cap Q\right\vert  - \left\vert Q \cap C\right\vert  + \left\vert C \cap Q \cap G\right\vert = \left\vert C \cup Q \cup G \right\vert$$
+
+Substituint les dades de l'enunciat, obtenim que
+
+$$275 + 263 + 211 - 176 - 150 - 198 + \left \vert C \cap Q \cap G \right\vert = 352$$
+
+d'on treiem que el nombre de persones que han resolt un problema dels 3 tipus és $127$.
+
 
 ## [Problema G2. Ordenant llibres](https://jutge.org/problems/P58245_ca) <a name="G2"/>
-
 
 <details><summary><b>Codi</b></summary>
 
