@@ -450,6 +450,8 @@ d'on treiem que el nombre de persones que han resolt un problema dels 3 tipus é
 
 ## [Problema G2. Ordenant llibres](https://jutge.org/problems/P58245_ca) <a name="G2"/>
 
+Aquest problema era llarg d'implementar, però la única dificultat era ordenar els llibres d'acord amb els criteris que es donen. Per fer-ho, es podia crear una $\texttt{dataclass}$ amb una funció $\texttt{compare}$ customitzada, o guardar-se cada llibre com una tupla i canviar el signe del nombre de pàgines i de l'alçada per tal de que l'ordenació per defecte de la tupla (de petit a gran) ens doni l'ordre que busquem.
+
 <details><summary><b>Solució amb dataclass</b></summary>
     
 ```python
