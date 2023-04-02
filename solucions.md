@@ -1,7 +1,5 @@
 # Solucions Classificatori OICat 2023
 
-:warning: __AQUEST DOCUMENT ENCARA NO ESTÀ ACABAT I POT CONTENIR ERRORS__
-
 ## Taula de continguts
 * [Problema C1. Ping-pong](#C1)
 * [Problema C2. L'ase d'en Buridan](#C2)
