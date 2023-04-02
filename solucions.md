@@ -164,25 +164,23 @@ from easyinput import read
 
 n = read(int)
 while n is not None:
-    print(n)
     a = [read(int) for _ in range(n)] # llegim n enters i els col·loquem en una llista.
-    sort(a) # ordenem la llista de petit a gran
-    a.reverse() # invertim l'ordre dels elements de la llista (ara aniran de gran a petit)
+    a.sort() # ordenem la llista (per defecte, de petit a gran).
+    a.reverse() # invertim l'ordre dels elements de la llista (ara aniran de gran a petit).
     suma = 0 # en aquesta variable anirem guardant la suma dels sacs que es menja l'ase.
     for i in range(n):
         # Primer comprovem si el següent element és igual i, en cas que sí, sortim del for.
-        if i < n-1: # si no comprovéssim això, a la següent línia accediríem a a[n], que no existeix.
+        if i < n-1: # hem de comprovar això abans d'accedir a a[i+1], ja que l'element a[n] no existeix.
             if a[i+1] == a[i]:
                 break # sortim del for.
 
-        # Com el següent element no és igual, sumem el valor del sac actual.
+        # Sumem el valor del sac actual.
         suma += a[i]
 
     print(suma)
 
     n = read(int) # llegim el nombre d'elements per a la següent iteració del while.
 ```
-
 </details>
 
 ## [Problema Q1. Productes acabats en cinc](https://jutge.org/problems/P14803_ca) <a name="Q1"/>
