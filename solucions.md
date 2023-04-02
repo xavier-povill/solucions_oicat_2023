@@ -74,7 +74,7 @@ int main() {
 ```
 </details>
 <details>
-  <summary><b>El mateix codi però una mica més elegant</b></summary>
+  <summary><b>El mateix codi però una mica més elegant (C++)</b></summary>
 
 ```cpp
 #include <iostream>
@@ -89,6 +89,34 @@ int main() {
         else cout << "NO" << endl;
     }
 }
+```
+</details>
+
+<details>
+    <summary><b>Codi (Python3)</b></summary>
+
+```python
+from easyinput import read
+
+a, b = read(int,int) # llegim dos enters.
+if max(a, b) > 21:
+    # Si el guanyador ha fet més de 21 punts, 
+    # hem de comprovar que la diferència és de 2 punts.
+    if min(a, b) + 2 == max(a, b):
+        print("SI")
+    else:
+        print("NO")
+elif max(a, b) == 21:
+    # Si el guanyador ha fet 21 punts exactes,
+    # hem de comprovar que el perdedor hagi fet 19 o menys.
+    if min(a, b) <= 19:
+        print("SI")
+    else:
+        print("NO")
+else:
+    # Si el guanyador ha fet menys de 21 punts, la puntuació no és vàlida.
+    print("NO")
+
 ```
 </details>
 
@@ -127,6 +155,34 @@ int main() {
     }
 }
 ```
+</details>
+
+<details><summary><b>Codi (Python3)</b></summary>
+
+```python
+from easyinput import read
+
+n = read(int)
+while n is not None:
+    print(n)
+    a = [read(int) for _ in range(n)] # llegim n enters i els col·loquem en una llista.
+    sort(a) # ordenem la llista de petit a gran
+    a.reverse() # invertim l'ordre dels elements de la llista (ara aniran de gran a petit)
+    suma = 0 # en aquesta variable anirem guardant la suma dels sacs que es menja l'ase.
+    for i in range(n):
+        # Primer comprovem si el següent element és igual i, en cas que sí, sortim del for.
+        if i < n-1: # si no comprovéssim això, a la següent línia accediríem a a[n], que no existeix.
+            if a[i+1] == a[i]:
+                break # sortim del for.
+
+        # Com el següent element no és igual, sumem el valor del sac actual.
+        suma += a[i]
+
+    print(suma)
+
+    n = read(int) # llegim el nombre d'elements per a la següent iteració del while.
+```
+
 </details>
 
 ## [Problema Q1. Productes acabats en cinc](https://jutge.org/problems/P14803_ca) <a name="Q1"/>
